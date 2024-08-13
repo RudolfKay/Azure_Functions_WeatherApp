@@ -1,0 +1,9 @@
+{
+  "profiles": {
+    "Atea.Task1": {
+      "commandName": "Project",
+      "commandLineArgs": "--port 7083",
+      "launchBrowser": false
+    }
+  }
+}
