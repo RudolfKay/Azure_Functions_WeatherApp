@@ -21,8 +21,6 @@ public static class QueryWeatherData
         // Extract the GUID from query string
         string guid = req.Query["guid"];
 
-        log.LogInformation($"QueryWeatherData function processed a request for GUID: {guid}");
-
         // Validate the GUID
         if (string.IsNullOrEmpty(guid) || !Guid.TryParse(guid, out _))
         {

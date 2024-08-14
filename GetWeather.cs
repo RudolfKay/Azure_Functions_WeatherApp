@@ -18,7 +18,6 @@ namespace Atea.Task1
             [Blob("weatherdata/{sys.utcnow}.txt", FileAccess.Write, Connection = "AzureWebJobsStorage")] BlobContainerClient blobContainerClient,
             ILogger log)
         {
-            //WeatherResponse weatherObject = null;
             string logMessage;
             string status;
             DateTime timestamp = DateTime.UtcNow;
@@ -74,8 +73,6 @@ namespace Atea.Task1
 
                 // Generate a unique RowKey using a GUID
                 string rowKey = logId;
-
-                // PartitionKey can be based on date (e.g., yyyyMMdd) for easier querying by day
                 string partitionKey = timestamp.ToString("yyyyMMdd");
 
                 // Log the operation result in Azure Table Storage
@@ -88,10 +85,6 @@ namespace Atea.Task1
 
                 TableOperation insertOperation = TableOperation.Insert(logEntity);
                 await logTable.ExecuteAsync(insertOperation);
-
-                // Log output to the console (useful for debugging in local dev environments)
-                log.LogInformation($"Timer trigger function executed at: {DateTime.Now}");
-                log.LogInformation(logMessage);
             }
         }
     } 
