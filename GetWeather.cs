@@ -12,8 +12,23 @@ namespace Atea.Task1
 {
     public static class GetWeather
     {
-        [FunctionName("GetWeather")]
-        public static async Task Run(
+        /// <summary>
+        /// Azure Function triggered by a Timer to fetch weather data from OpenWeatherMap API every minute.
+        /// The retrieved data is stored in Azure Blob Storage and logs the result in Azure Table Storage.
+        /// </summary>
+        /// <param name="myTimer">The TimerInfo object used by the TimerTrigger to determine the schedule for the function.</param>
+        /// <param name="blobContainerClient">The BlobContainerClient used to interact with Azure Blob Storage, where the weather data is saved.</param>
+        /// <param name="log">The ILogger instance used for logging information, warnings, and errors during function execution.</param>
+        /// <returns>A task that represents the asynchronous operation of the function.</returns>
+        /// <remarks>
+        /// This function performs the following steps:
+        /// 1. Fetches weather data for London from the OpenWeatherMap API.
+        /// 2. Saves the retrieved weather data in Azure Blob Storage with a unique name based on a GUID.
+        /// 3. Logs the result of the operation in Azure Table Storage, including success or failure status and any error messages.
+        /// The function uses a timer trigger to execute every minute. If the operation is successful, a success message is logged; otherwise, the error message is logged.
+        /// </remarks>
+        [FunctionName("FetchAndStoreWeatherData")]
+        public static async Task FetchAndStoreWeatherData(
             [TimerTrigger("0 */1 * * * *")] TimerInfo myTimer,
             [Blob("weatherdata/{sys.utcnow}.txt", FileAccess.Write, Connection = "AzureWebJobsStorage")] BlobContainerClient blobContainerClient,
             ILogger log)
