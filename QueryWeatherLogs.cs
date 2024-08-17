@@ -9,10 +9,31 @@ using Microsoft.Azure.WebJobs;
 using System.Threading.Tasks;
 using System;
 
-public static class QueryWeatherLogsFunction
+public static class QueryWeatherLogs
 {
-    [FunctionName("QueryWeatherLogs")]
-    public static async Task<IActionResult> Run(
+    /// <summary>
+    /// Azure Function triggered by an HTTP GET request to query weather logs from Azure Table Storage.
+    /// This function retrieves weather log entries within a specified date range and returns them as a JSON array.
+    /// </summary>
+    /// <param name="req">The HTTP request object used to retrieve query parameters (date range) from the request.</param>
+    /// <param name="log">The ILogger instance used for logging information, warnings, and errors during function execution.</param>
+    /// <returns>
+    /// An IActionResult that represents the result of the HTTP request:
+    /// - 200 OK with the list of weather log entries if the logs are successfully retrieved.
+    /// - 400 Bad Request if the 'from' or 'to' date parameters are invalid or if 'from' is greater than 'to'.
+    /// - 404 Not Found if the WeatherLogs table does not exist.
+    /// </returns>
+    /// <remarks>
+    /// This function performs the following steps:
+    /// 1. **Extract Date Range**: Retrieves the 'from' and 'to' date parameters from the query string and validates them.
+    /// 2. **Validate Dates**: Ensures that the 'from' date is not greater than the 'to' date and that both dates are valid.
+    /// 3. **Access Table Storage**: Connects to Azure Table Storage and retrieves the reference to the WeatherLogs table.
+    /// 4. **Check Table Existence**: Verifies if the WeatherLogs table exists in Azure Table Storage.
+    /// 5. **Build and Execute Query**: Constructs a query to filter log entries based on the provided date range and executes it, retrieving all matching entries.
+    /// 6. **Return Results**: Returns the retrieved log entries as a JSON array in the HTTP response.
+    /// </remarks>
+    [FunctionName("GetWeatherLogsByDateRange")]
+    public static async Task<IActionResult> GetWeatherLogsByDateRange(
         [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "queryWeatherLogs")] HttpRequest req,
         ILogger log)
     {

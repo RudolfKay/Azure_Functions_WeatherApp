@@ -3,6 +3,55 @@ using Newtonsoft.Json;
 
 namespace Atea.Task1.Models
 {
+    /// <summary>
+    /// Represents the weather response data returned from the weather API.
+    /// </summary>
+    /// <remarks>
+    /// This class is used to deserialize the JSON response from the weather API into a .NET object.
+    /// It contains various weather-related information, including coordinates, weather conditions, and system data.
+    /// </remarks>
+    public class WeatherResponse
+    {
+        [JsonProperty("coord")]
+        public Coord Coord { get; set; }
+
+        [JsonProperty("weather")]
+        public List<Weather> Weather { get; set; }
+
+        [JsonProperty("base")]
+        public string Base { get; set; }
+
+        [JsonProperty("main")]
+        public Main Main { get; set; }
+
+        [JsonProperty("visibility")]
+        public int Visibility { get; set; }
+
+        [JsonProperty("wind")]
+        public Wind Wind { get; set; }
+
+        [JsonProperty("clouds")]
+        public Clouds Clouds { get; set; }
+
+        [JsonProperty("dt")]
+        public long Dt { get; set; }
+
+        [JsonProperty("sys")]
+        public Sys Sys { get; set; }
+
+        [JsonProperty("timezone")]
+        public int Timezone { get; set; }
+
+        [JsonProperty("id")]
+        public int Id { get; set; }
+
+        [JsonProperty("name")]
+        public string Name { get; set; }
+
+        [JsonProperty("cod")]
+        public int Cod { get; set; }
+    }
+
     public class Coord
     {
         [JsonProperty("lon")]
@@ -85,47 +134,5 @@ namespace Atea.Task1.Models
 
         [JsonProperty("sunset")]
         public long Sunset { get; set; }
-    }
-    
-    public class WeatherResponse
-    {
-        [JsonProperty("coord")]
-        public Coord Coord { get; set; }
-
-        [JsonProperty("weather")]
-        public List<Weather> Weather { get; set; }
-
-        [JsonProperty("base")]
-        public string Base { get; set; }
-
-        [JsonProperty("main")]
-        public Main Main { get; set; }
-
-        [JsonProperty("visibility")]
-        public int Visibility { get; set; }
-
-        [JsonProperty("wind")]
-        public Wind Wind { get; set; }
-
-        [JsonProperty("clouds")]
-        public Clouds Clouds { get; set; }
-
-        [JsonProperty("dt")]
-        public long Dt { get; set; }
-
-        [JsonProperty("sys")]
-        public Sys Sys { get; set; }
-
-        [JsonProperty("timezone")]
-        public int Timezone { get; set; }
-
-        [JsonProperty("id")]
-        public int Id { get; set; }
-
-        [JsonProperty("name")]
-        public string Name { get; set; }
-
-        [JsonProperty("cod")]
-        public int Cod { get; set; }
     }
 }
