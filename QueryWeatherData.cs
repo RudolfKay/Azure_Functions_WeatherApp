@@ -35,8 +35,8 @@ public static class QueryWeatherData
     /// 5. If the blob does not exist, returns a 404 Not Found response.
     /// 6. If there is any error during processing, logs the error and returns a 500 Internal Server Error response.
     /// </remarks>
-    [FunctionName("GetWeatherDataByGuid")]
-    public static async Task<IActionResult> GetWeatherDataByGuid(
+    [FunctionName("GetWeatherDataByIdFunction")]
+    public static async Task<IActionResult> GetWeatherDataByIdFunction(
         [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "queryWeatherData")] HttpRequest req,
         [Blob("weatherdata/{sys.utcnow}", Connection = "AzureWebJobsStorage")] BlobClient blobClient,
         ILogger log)
