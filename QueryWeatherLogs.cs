@@ -32,8 +32,8 @@ public static class QueryWeatherLogs
     /// 5. **Build and Execute Query**: Constructs a query to filter log entries based on the provided date range and executes it, retrieving all matching entries.
     /// 6. **Return Results**: Returns the retrieved log entries as a JSON array in the HTTP response.
     /// </remarks>
-    [FunctionName("GetWeatherLogsByDateRange")]
-    public static async Task<IActionResult> GetWeatherLogsByDateRange(
+    [FunctionName("GetWeatherLogsByDateRangeFunction")]
+    public static async Task<IActionResult> GetWeatherLogsByDateRangeFunction(
         [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "queryWeatherLogs")] HttpRequest req,
         ILogger log)
     {

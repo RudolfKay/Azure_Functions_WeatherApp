@@ -27,8 +27,8 @@ namespace Atea.Task1
         /// 3. Logs the result of the operation in Azure Table Storage, including success or failure status and any error messages.
         /// The function uses a timer trigger to execute every minute. If the operation is successful, a success message is logged; otherwise, the error message is logged.
         /// </remarks>
-        [FunctionName("FetchAndStoreWeatherData")]
-        public static async Task FetchAndStoreWeatherData(
+        [FunctionName("FetchAndStoreWeatherDataFunction")]
+        public static async Task FetchAndStoreWeatherDataFunction(
             [TimerTrigger("0 */1 * * * *")] TimerInfo myTimer,
             [Blob("weatherdata/{sys.utcnow}.txt", FileAccess.Write, Connection = "AzureWebJobsStorage")] BlobContainerClient blobContainerClient,
             ILogger log)
