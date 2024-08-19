@@ -20,15 +20,8 @@ namespace Atea.Task1
         /// <param name="blobContainerClient">The BlobContainerClient used to interact with Azure Blob Storage, where the weather data is saved.</param>
         /// <param name="log">The ILogger instance used for logging information, warnings, and errors during function execution.</param>
         /// <returns>A task that represents the asynchronous operation of the function.</returns>
-        /// <remarks>
-        /// This function performs the following steps:
-        /// 1. Fetches weather data for London from the OpenWeatherMap API.
-        /// 2. Saves the retrieved weather data in Azure Blob Storage with a unique name based on a GUID.
-        /// 3. Logs the result of the operation in Azure Table Storage, including success or failure status and any error messages.
-        /// The function uses a timer trigger to execute every minute. If the operation is successful, a success message is logged; otherwise, the error message is logged.
-        /// </remarks>
-        [FunctionName("FetchAndStoreWeatherData")]
-        public static async Task FetchAndStoreWeatherData(
+        [FunctionName("FetchAndStoreWeatherDataFunction")]
+        public static async Task FetchAndStoreWeatherDataFunction(
             [TimerTrigger("0 */1 * * * *")] TimerInfo myTimer,
             [Blob("weatherdata/{sys.utcnow}.txt", FileAccess.Write, Connection = "AzureWebJobsStorage")] BlobContainerClient blobContainerClient,
             ILogger log)
@@ -47,13 +40,18 @@ namespace Atea.Task1
             {
                 try
                 {
-                    var response = await httpClient.GetAsync("https://api.openweathermap.org/data/2.5/weather?q=London&appid=426702e350c498554c037f99df7644ca");
+                    string apiUrl = Environment.GetEnvironmentVariable("WeatherApiUrl");
+                    string city = Environment.GetEnvironmentVariable("WeatherApiCity");
+                    string apiKey = Environment.GetEnvironmentVariable("WeatherApiKey");
+
+                    string requestUrl = $"{apiUrl}?q={city}&appid={apiKey}";
+
+                    var response = await httpClient.GetAsync(requestUrl);
 
                     if (response.IsSuccessStatusCode)
                     {
                         var weatherData  = await response.Content.ReadAsStringAsync();
 
-                        // Generate a unique GUID for the blob name
                         var blobName = $"{logId}.json";
                         BlobClient blobClient = blobContainerClient.GetBlobClient(blobName);
 
@@ -86,7 +84,6 @@ namespace Atea.Task1
                 // Ensure the table exists
                 await logTable.CreateIfNotExistsAsync();
 
-                // Generate a unique RowKey using a GUID
                 string rowKey = logId;
                 string partitionKey = timestamp.ToString("yyyyMMdd");
 
