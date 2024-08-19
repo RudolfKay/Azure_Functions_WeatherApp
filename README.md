@@ -13,3 +13,6 @@ Steps to run:
 Data from blob is queried by GUID, which is the rowKey for logs. You can locate specific GUIDs either through Azure Storage Explorer using rowKey, or by first searching logs for specific timespans, then copying the rowKey GUID and searching blob through Postman (or similar) using that.
 
 TIP: When searching for logs use a date/time format YYYY-MM-DDThh:mm:ss, for example: 2024-08-17T14:40:00
+
+What would I improve next:
+1. Make the functions more easily testable/usable for any user by adding Azure API Management, or using a hybrid approach - integrate into a Web API project.
