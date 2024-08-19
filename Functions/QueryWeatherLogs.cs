@@ -17,8 +17,8 @@ public static class QueryWeatherLogs
     /// <param name="req">The HTTP request containing 'from' and 'to' query parameters.</param>
     /// <param name="log">Logger to capture execution details.</param>
     /// <returns>Weather logs within the specified date range or appropriate HTTP responses.</returns>
-    [FunctionName("GetWeatherLogsByDateRange")]
-    public static async Task<IActionResult> GetWeatherLogsByDateRange(
+    [FunctionName("GetWeatherLogsByDatesFunction")]
+    public static async Task<IActionResult> GetWeatherLogsByDatesFunction(
         [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "queryWeatherLogs")] HttpRequest req,
         ILogger log)
     {
