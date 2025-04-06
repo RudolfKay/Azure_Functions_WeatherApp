@@ -1,5 +1,3 @@
-# Atea Task Nr. 1
-
 Steps to run:
 
 1) Start storage emulator
